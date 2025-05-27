@@ -4,40 +4,166 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f9fb;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      margin: 24px 0 32px 32px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #1e40af;
+    }
+
+    .stats-section {
+      background: #fff;
+      margin: 0 auto 32px auto;
+      max-width: 700px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 24px 32px;
+    }
+
+    .stats-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: #2563eb;
+    }
+
+    .stats-grid {
+      display: flex;
+      gap: 24px;
+      justify-content: flex-start;
+    }
+
+    .stat-card {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 18px 28px;
+      text-align: center;
+      flex: 1;
+      box-shadow: 0 1px 4px rgba(37,99,235,0.07);
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #1e40af;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: #64748b;
+      margin-top: 6px;
+    }
+
+    .maintable {
+      background: #fff;
+      max-width: 900px;
+      margin: 0 auto 32px auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 24px 32px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+    }
+
+    th, td {
+      padding: 14px 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f1f5f9;
+    }
+
+    tbody tr:hover {
+      background: #e0e7ef;
+      transition: background 0.2s;
+    }
+    </style>
+
   </head>
   <body>
-    <button>Nouvelle expérience +</button>
-    <div class="graphKm"><p>KM</p></div>
-    <div class="graphHr"><p>HR</p></div>
-    <div class="graphManoeuvre"><p>Manoeuvre</p></div>
-    <div class="maintable">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Heure de début</th>
-            <th>Heure de fin</th>
-            <th>Météo</th>
-            <th>Type de route</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>08:00</td>
-            <td>09:00</td>
-            <td>Ensoleillé</td>
-            <td>Autoroute</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>10:15</td>
-            <td>11:00</td>
-            <td>Pluvieux</td>
-            <td>Ville</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <body>
+      <button>Nouvelle expérience +</button>
+
+      <div class="stats-section">
+        <div class="stats-title">📊 Aperçu</div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="graphKm">1</div>
+            <div class="stat-label">Km</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number" id="graphHr">1</div>
+            <div class="stat-label">Hr</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number" id="graphManoeuvre">1</div>
+            <div class="stat-label">manoeuvre</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="maintable">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Heure de début</th>
+              <th>Heure de fin</th>
+              <th>Météo</th>
+              <th>Type de route</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>08:00</td>
+              <td>09:00</td>
+              <td>Ensoleillé</td>
+              <td>Autoroute</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>10:15</td>
+              <td>11:00</td>
+              <td>Pluvieux</td>
+              <td>Ville</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </body>
   </body>
 </html>

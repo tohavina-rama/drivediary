@@ -1,6 +1,6 @@
 <?php
-$pageTitle = "Tableau de bord";
-include 'head.php';
+$pageTitle = "Accueil";
+include __DIR__ . '/includes/head.php';
 ?>
 
 <body>

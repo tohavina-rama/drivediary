@@ -1,50 +1,12 @@
 <?php
-$pageTitle = "Tableau de bord";
-include 'head.php';
+$pageTitle = "Dashboard";
+include __DIR__ . '/includes/head.php';
 ?>
 
 <body>
 
-    <?php include __DIR__ . '/includes/header.php';; ?>
-
-    <button>Nouvelle expérience +</button>
-    <div class="graphKm">
-        <p>KM</p>
-    </div>
-    <div class="graphHr">
-        <p>HR</p>
-    </div>
-    <div class="graphManoeuvre">
-        <p>Manoeuvre</p>
-    </div>
-    <div class="maintable">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Heure de début</th>
-                    <th>Heure de fin</th>
-                    <th>Météo</th>
-                    <th>Type de route</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>08:00</td>
-                    <td>09:00</td>
-                    <td>Ensoleillé</td>
-                    <td>Autoroute</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>10:15</td>
-                    <td>11:00</td>
-                    <td>Pluvieux</td>
-                    <td>Ville</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <?php include __DIR__ . '/includes/header.php'; ?>
+<main>test</main>
+  
 
 </body>

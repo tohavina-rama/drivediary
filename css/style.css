@@ -1,0 +1,11 @@
+body {
+  display: flex;
+}
+
+header {
+  background-color: #c90808;
+}
+
+main {
+ background-color: aqua;
+}
