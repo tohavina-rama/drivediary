@@ -1,169 +1,303 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site avec Formulaire Pop-up</title>
     <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f7f9fb;
-      margin: 0;
-      padding: 0;
-      color: #222;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    button {
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 12px 24px;
-      font-size: 1rem;
-      margin: 24px 0 32px 32px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover {
-      background: #1e40af;
-    }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .stats-section {
-      background: #fff;
-      margin: 0 auto 32px auto;
-      max-width: 700px;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      padding: 24px 32px;
-    }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-    .stats-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 18px;
-      color: #2563eb;
-    }
+        h1 {
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-    .stats-grid {
-      display: flex;
-      gap: 24px;
-      justify-content: flex-start;
-    }
+        .add-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    .stat-card {
-      background: #f1f5f9;
-      border-radius: 8px;
-      padding: 18px 28px;
-      text-align: center;
-      flex: 1;
-      box-shadow: 0 1px 4px rgba(37,99,235,0.07);
-    }
+        .add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(45deg, #ff5252, #ff7979);
+        }
 
-    .stat-number {
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: #1e40af;
-    }
+        .add-btn:active {
+            transform: translateY(-1px);
+        }
 
-    .stat-label {
-      font-size: 1rem;
-      color: #64748b;
-      margin-top: 6px;
-    }
+        /* Styles pour la pop-up */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-    .maintable {
-      background: #fff;
-      max-width: 900px;
-      margin: 0 auto 32px auto;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      padding: 24px 32px;
-    }
+        .popup-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 1rem;
-    }
+        .popup {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
 
-    th, td {
-      padding: 14px 10px;
-      text-align: left;
-    }
+        .popup-overlay.active .popup {
+            transform: scale(1);
+        }
 
-    th {
-      background: #2563eb;
-      color: #fff;
-      font-weight: 600;
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
-    }
+        .popup h2 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 28px;
+        }
 
-    tbody tr:nth-child(even) {
-      background: #f1f5f9;
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    tbody tr:hover {
-      background: #e0e7ef;
-      transition: background 0.2s;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(45deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: linear-gradient(45deg, #f44336, #da190b);
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: linear-gradient(45deg, #da190b, #c62828);
+            transform: translateY(-2px);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
     </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mon Site Web</h1>
+        <button class="add-btn" onclick="openPopup()">
+            + Ajouter
+        </button>
+    </div>
 
-  </head>
-  <body>
-    <body>
-      <button>Nouvelle expérience +</button>
-
-      <div class="stats-section">
-        <div class="stats-title">📊 Aperçu</div>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-number" id="graphKm">1</div>
-            <div class="stat-label">Km</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-number" id="graphHr">1</div>
-            <div class="stat-label">Hr</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-number" id="graphManoeuvre">1</div>
-            <div class="stat-label">manoeuvre</div>
-          </div>
+    <!-- Pop-up avec formulaire -->
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopupOnOverlay(event)">
+        <div class="popup">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <h2>Ajouter un élément</h2>
+            <form id="addForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telephone">Téléphone :</label>
+                    <input type="tel" id="telephone" name="telephone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="categorie">Catégorie :</label>
+                    <select id="categorie" name="categorie" required>
+                        <option value="">Sélectionner une catégorie</option>
+                        <option value="personnel">Personnel</option>
+                        <option value="professionnel">Professionnel</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description :</label>
+                    <textarea id="description" name="description" placeholder="Décrivez brièvement..."></textarea>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-submit">Ajouter</button>
+                    <button type="button" class="btn btn-cancel" onclick="closePopup()">Annuler</button>
+                </div>
+            </form>
         </div>
-      </div>
+    </div>
 
-      <div class="maintable">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Heure de début</th>
-              <th>Heure de fin</th>
-              <th>Météo</th>
-              <th>Type de route</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>08:00</td>
-              <td>09:00</td>
-              <td>Ensoleillé</td>
-              <td>Autoroute</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>10:15</td>
-              <td>11:00</td>
-              <td>Pluvieux</td>
-              <td>Ville</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </body>
-  </body>
+    <script>
+        function openPopup() {
+            const overlay = document.getElementById('popupOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Empêche le scroll du body
+        }
+
+        function closePopup() {
+            const overlay = document.getElementById('popupOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restaure le scroll du body
+            
+            // Réinitialise le formulaire
+            document.getElementById('addForm').reset();
+        }
+
+        function closePopupOnOverlay(event) {
+            // Ferme la pop-up seulement si on clique sur l'overlay, pas sur le contenu
+            if (event.target === event.currentTarget) {
+                closePopup();
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            // Récupère les données du formulaire
+            const formData = new FormData(event.target);
+            const data = {
+                nom: formData.get('nom'),
+                email: formData.get('email'),
+                telephone: formData.get('telephone'),
+                categorie: formData.get('categorie'),
+                description: formData.get('description')
+            };
+            
+            // Simule l'ajout des données (ici on pourrait envoyer à un serveur)
+            console.log('Données ajoutées:', data);
+            alert('Élément ajouté avec succès !');
+            
+            // Ferme la pop-up
+            closePopup();
+        }
+
+        // Ferme la pop-up avec la touche Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePopup();
+            }
+        });
+    </script>
+</body>
 </html>
