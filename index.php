@@ -6,6 +6,9 @@
     <title>Drivediary</title>
 </head>
 <body>
+
+<?php include 'header.php'; ?>
+
     <form method="post" action="">
         <label for="nom">Nom :</label>
         <input type="text" id="nom" name="nom" required>
