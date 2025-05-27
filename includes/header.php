@@ -7,6 +7,8 @@
                 <li><a href="Objectif.php">Objectif</a></li>
             </ul>
         </div>
-        <div class="logout"></div>
+        <div class="logout">
+            <a href="index.php"><button type="button">Déconnecter</button></a>
+        </div>
     </div>
 </header>

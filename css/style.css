@@ -1,11 +1,17 @@
 body {
   display: flex;
+  width: 100%;
+  background-color: chartreuse;
 }
 
 header {
+        height: 100%;
+    width: 20rem;
   background-color: #c90808;
 }
 
 main {
+    height: 100%;
+    width: 30rem;
  background-color: aqua;
 }
