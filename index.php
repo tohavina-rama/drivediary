@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drivediary</title>
-</head>
+<?php
+$pageTitle = "Tableau de bord";
+include 'head.php';
+?>
 
 <body>
 
