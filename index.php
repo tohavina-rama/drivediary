@@ -3,6 +3,8 @@ $pageTitle = "Accueil";
 include __DIR__ . '/includes/head.php';
 ?>
 
+<?php include __DIR__ . '/includes/header.php';  ?>
+
 <body>
     <form method="post" action="">
         <label for="nom">Nom :</label>

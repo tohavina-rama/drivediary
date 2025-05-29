@@ -2,7 +2,7 @@
 <div class="popup-overlay" id="popupOverlay" onclick="closePopupOnOverlay(event)">
     <div class="popup">
         <button class="close-btn" onclick="closePopup()">&times;</button>
-        <h2>Ajouter un élément</h2>
+        <h2>Nouvelle Expérience</h2>
         <form id="addForm" onsubmit="submitForm(event)">
             <div class="form-group">
                 <label for="nom">Nom :</label>

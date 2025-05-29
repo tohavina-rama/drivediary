@@ -1,3 +1,8 @@
+<?php
+include __DIR__ . '/includes/dbconnection.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

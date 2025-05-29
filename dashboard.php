@@ -1,6 +1,7 @@
 <?php
 $pageTitle = "Dashboard";
 include __DIR__ . '/includes/head.php';
+
 ?>
 
 
