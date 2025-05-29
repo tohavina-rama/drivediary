@@ -19,10 +19,8 @@ try {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-if ($pdo) {
-    echo "Connexion à la base de données réussie.";
-} else {
-    echo "Échec de la connexion à la base de données.";
-}
+
+
+
 
 ?>

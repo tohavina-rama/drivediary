@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/includes/dbconnection.php';
+include 'dbconnection.php';
 
 ?>
 
@@ -11,3 +11,5 @@ include __DIR__ . '/includes/dbconnection.php';
     <title><?= htmlspecialchars($pageTitle ?? 'Titre par défaut') ?></title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
+
