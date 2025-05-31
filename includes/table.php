@@ -25,6 +25,7 @@
                         </a>
                     </th>
                     <th>Date de fin</th>
+                    <th>Distance parcourue</th>
                     <th>Météo</th>
                     <th>Trafic</th>
                     <th>Manoeuvre</th>
@@ -54,6 +55,7 @@
                     echo "<tr>
                                     <td>$date_debut</td>
                                     <td>$date_fin</td>
+                                    <td>$distance_parcourue km</td>
                                     <td>$meteo</td>
                                     <td>$route</td>
                                 </tr>";
