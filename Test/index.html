@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Simple</title>
+</head>
+<body>
+    <form id="form" action="traiter.php">
+        <input name="nom" placeholder="Nom">
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Afficher les données en JS
+            const nom = document.querySelector('input[name="nom"]').value;
+            console.log('Données JS:', nom);
+            
+        
+        });
+    </script>
+</body>
+</html>

@@ -1,5 +1,4 @@
 <header>
-
     <div class="userImage"></div>
     <div class="nav">
         <ul>

@@ -608,3 +608,30 @@ tr:hover {
     font-size: 0.95rem;
   }
 }
+
+.resultat-erreur {
+  color: var(--color12);
+  background: var(--color5);
+  border: 1px solid var(--color12);
+  border-radius: 7px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  font-weight: 500;
+  font-size: 0.98rem;
+  box-shadow: none;
+  text-align: left;
+  letter-spacing: 0.1px;
+  animation: shake 0.2s linear 1;
+}
+.resultat-hide {
+  display: none;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}

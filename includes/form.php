@@ -15,9 +15,11 @@
                         <input type="datetime-local" id="heure_arrivee" name="heure_arrivee" required>
                     </div>
 
+                    <div id="resultat"></div>
+
                     <div class="form-group">
                         <label for="distance_parcourue">Distance parcourue en KM</label>
-                        <input type="number" id="distance_parcourue" name="distance_parcourue" required>
+                        <input type="number" id="distance_parcourue" name="distance_parcourue" min="0" max="1000">
                     </div>
 
                     <div class="form-group">
@@ -85,5 +87,6 @@
             <button type="button" class="btn btn-cancel" onclick="closePopup()">Annuler</button>
         </div>
         </form>
+        
     </div>
 </div>
