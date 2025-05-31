@@ -1,5 +1,3 @@
-<script src="/assets/js/script.js"></script>
-
 <header>
 
     <div class="userImage"></div>
