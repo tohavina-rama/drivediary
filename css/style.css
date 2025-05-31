@@ -229,7 +229,7 @@ tr:hover {
 }
 
 .tableScroll {
-  max-height: 250px;
+  max-height: 210px;
   overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);

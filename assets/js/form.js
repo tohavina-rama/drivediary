@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-  function testForm() {
+  function dateTest() {
     //vérification de l'heure de départ et de l'heure d'arrivée
     const heureDepart = document.querySelector("#heure_depart").value;
     const heureArrivee = document.querySelector("#heure_arrivee").value;
-
     const dateDepart = heureDepart ? new Date(heureDepart) : null;
     const dateArrivee = heureArrivee ? new Date(heureArrivee) : null;
 
@@ -14,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
 
-    //vérification
     document.getElementById("resultat").className = "resultat-hide";
     return true;
   }
@@ -25,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     const formData = new FormData(this);
-    /* let man = querySelector("#man");*/
-    if (testForm()) {
+
+    if (dateTest()) {
       fetch("/includes/sendForm.php", {
         method: "POST",
         body: formData,
@@ -44,6 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("ERREUR:", error);
           document.getElementById("resultat").innerHTML = "ERREUR: " + error;
         });
+
+      closePopup();
     }
   });
 });

@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="route">Type de route :</label>
+                        <label for="route">Densité du trafic :</label>
                         <select id="route" name="route" required>
                             <?php
                             $route = $pdo->query("SELECT * FROM route")->fetchAll(PDO::FETCH_ASSOC);
