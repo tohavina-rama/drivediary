@@ -12,6 +12,7 @@ include 'dbconnection.php';
     <link rel="stylesheet" href="css/style.css">
     <script src="/assets/js/popup.js"></script>
     <script src="/assets/js/form.js"></script>
+    <script src="/assets/js/goal.js"></script>
     <title><?= htmlspecialchars($pageTitle ?? 'Titre par défaut') ?></title>
 
 </head>

@@ -1,19 +1,19 @@
 <div class="statTable">
     <div class="tableScroll">
         <?php
-        // Déterminer l'ordre de tri (ascendant ou descendant)
-        $order = 'ASC';
-        $orderIcon = '▲';
-        if (isset($_GET['order']) && strtolower($_GET['order']) === 'desc') {
-            $order = 'DESC';
-            $orderIcon = '▼';
-        }
+            // Déterminer l'ordre de tri (ascendant ou descendant)
+            $order = 'ASC';
+            $orderIcon = '▲';
+            if (isset($_GET['order']) && strtolower($_GET['order']) === 'desc') {
+                $order = 'DESC';
+                $orderIcon = '▼';
+            }
 
-        // Générer l'URL pour inverser l'ordre
-        $currentUrl = strtok($_SERVER["REQUEST_URI"], '?');
-        $toggleOrder = ($order === 'ASC') ? 'desc' : 'asc';
-        $queryString = http_build_query(array_merge($_GET, ['order' => $toggleOrder]));
-        $sortUrl = $currentUrl . '?' . $queryString;
+            // Générer l'URL pour inverser l'ordre
+            $currentUrl = strtok($_SERVER["REQUEST_URI"], '?');
+            $toggleOrder = ($order === 'ASC') ? 'desc' : 'asc';
+            $queryString = http_build_query(array_merge($_GET, ['order' => $toggleOrder]));
+            $sortUrl = $currentUrl . '?' . $queryString;
         ?>
 
         <table>
@@ -25,7 +25,7 @@
                         </a>
                     </th>
                     <th>Date de fin</th>
-                    <th>Distance parcourue</th>
+                    <th>Distance</th>
                     <th>Météo</th>
                     <th>Trafic</th>
                     <th>Manoeuvre</th>
@@ -33,33 +33,56 @@
             </thead>
             <tbody>
                 <?php
-                $experienceManoeuvres = $pdo->query("SELECT * FROM experience_manoeuvre")->fetchAll(PDO::FETCH_ASSOC);
+                    require_once 'dbconnection.php';
 
-                $experiences = $pdo->query("SELECT * FROM experience ORDER BY heure_depart $order")->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($experiences as $experience) {
-                    $date_debut_raw = $experience['heure_depart'];
-                    $date_debut = date('d/m/Y à H:i', strtotime($date_debut_raw));
+                    try {
+                        $sql = "
+                            SELECT e.*, 
+                                   m.meteo, 
+                                   r.type_route
+                            FROM experience e
+                            JOIN meteo m ON e.meteo_id = m.meteo_id
+                            JOIN route r ON e.route_id = r.route_id
+                            ORDER BY e.heure_depart $order
+                        ";
+                        $experiences = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-                    $date_fin_raw = htmlspecialchars($experience['heure_arrivee']);
-                    $date_fin = date('d/m/Y à H:i', strtotime($date_fin_raw));
+                        $sqlManoeuvres = "
+                            SELECT em.experience_id, type_manoeuvre AS manoeuvre
+                            FROM experience_manoeuvre em
+                            JOIN manoeuvre man ON em.manoeuvre_id = man.manoeuvre_id
+                        ";
+                        $allManoeuvres = $pdo->query($sqlManoeuvres)->fetchAll(PDO::FETCH_ASSOC);
 
-                    $distance_parcourue = htmlspecialchars($experience['distance_parcourue']);
+                        $manoeuvresParExperience = [];
+                        foreach ($allManoeuvres as $item) {
+                            $manoeuvresParExperience[$item['experience_id']][] = $item['manoeuvre'];
+                        }
 
-                    $meteo_id = htmlspecialchars($experience['meteo_id']);
-                    $meteo = $pdo->query("SELECT `meteo` FROM `meteo` WHERE meteo_id = $meteo_id;")->fetchColumn();
+                        foreach ($experiences as $experience) {
+                            $experience_id = (int)$experience['experience_id'];
 
-                    $route_id = htmlspecialchars($experience['route_id']);
-                    $route = $pdo->query("SELECT `type_route` FROM `route` WHERE route_id = $route_id;")->fetchColumn();
+                            $date_debut = date('d/m/Y à H:i', strtotime($experience['heure_depart']));
+                            $date_fin = date('d/m/Y à H:i', strtotime($experience['heure_arrivee']));
+                            $distance = htmlspecialchars($experience['distance_parcourue']);
+                            $meteo = htmlspecialchars($experience['meteo']);
+                            $route = htmlspecialchars($experience['type_route']);
 
+                            $manoeuvres = $manoeuvresParExperience[$experience_id] ?? [];
+                            $manoeuvresList = htmlspecialchars(implode(', ', $manoeuvres));
 
-                    echo "<tr>
-                                    <td>$date_debut</td>
-                                    <td>$date_fin</td>
-                                    <td>$distance_parcourue km</td>
-                                    <td>$meteo</td>
-                                    <td>$route</td>
-                                </tr>";
-                }
+                            echo "<tr>
+                                <td>$date_debut</td>
+                                <td>$date_fin</td>
+                                <td>$distance km</td>
+                                <td>$meteo</td>
+                                <td>$route</td>
+                                <td>$manoeuvresList</td>
+                            </tr>";
+                        }
+                    } catch (PDOException $e) {
+                        echo "Erreur lors de la récupération des données : " . $e->getMessage();
+                    }
                 ?>
             </tbody>
         </table>

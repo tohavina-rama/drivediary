@@ -8,31 +8,27 @@ include __DIR__ . '/includes/head.php';
     <?php include __DIR__ . '/includes/header.php';  ?>
 
     <main>
-       <button class="buttonNew" onclick="openPopup()">
+        <button class="buttonNew" onclick="openPopup()">
             + Nouvelle expérience
         </button>
 
-<?php include __DIR__ . '/includes/form.php'; ?>
+        <?php include __DIR__ . '/includes/form.php'; ?>
 
         <div class="goalSection">
             <div class="statSection goalStatSection">
                 <div class="statTitle">📊 Aperçu</div>
                 <div class="statGrid">
                     <div class="statCard">
-                        <div class="statNumber" id="doneNumber">--</div>
-                        <div class="statLabel">Réalisé</div>
+                        <?php include __DIR__ . '/includes/distanceKM.php'; ?>
+                        <div class="statLabel">Km</div>
                     </div>
                     <div class="statCard">
-                        <div class="statNumber" id="goalNumber">--</div>
-                        <div class="statLabel">Objectif</div>
+                        <?php include __DIR__ . '/includes/duree.php'; ?>
+                        <div class="statLabel">Hr</div>
                     </div>
                     <div class="statCard">
-                        <div class="statNumber" id="remainNumber">--</div>
-                        <div class="statLabel">Restant</div>
-                    </div>
-                    <div class="statCard">
-                        <div class="statNumber" id="moyNumber">--</div>
-                        <div class="statLabel">Moyenne</div>
+                        <div class="statNumber" id="goalNumber"></div>
+                        <div class="statLabel">Objectif Hr</div>
                     </div>
                 </div>
                 <div class="progressSection">
@@ -46,21 +42,12 @@ include __DIR__ . '/includes/head.php';
                             <div class="progressFill" id="progressFill"></div>
                         </div>
                     </div>
-
-                    <div id="achievementBadge" style="display: none;">
-                        <div class="achievementBadge">🎉 Félicitations ! Objectif atteint !</div>
-                    </div>
                 </div>
 
 
             </div>
             <div class="objectiveForm">
                 <div class="formTitle">🎯 Définir mon objectif</div>
-
-                <div class="unitSelector">
-                    <button class="unitBtn active" onclick="selectUnit('heures')">⏰ Heures</button>
-                    <button class="unitBtn" onclick="selectUnit('km')">🛣️ Kilomètres</button>
-                </div>
 
                 <div class="inputGroup">
                     <input type="number" id="objectiveInput" placeholder=" " min="1" max="1000">

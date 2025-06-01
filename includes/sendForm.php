@@ -1,5 +1,6 @@
 <?php
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once 'dbconnection.php';
 
@@ -45,22 +46,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $experienceId = $pdo->lastInsertId();
 
-        $manoeuvre = $_POST['manoeuvre'] ?? [];
+        $manoeuvres = $_POST['manoeuvre'] ?? [];
+
 
         if (!empty($manoeuvres)) {
             $sqlManoeuvre = "INSERT INTO `experience_manoeuvre`(`experience_id`, `manoeuvre_id`) VALUES (:experience_id,:manoeuvre_id)";
             $stmtManoeuvre = $pdo->prepare($sqlManoeuvre);
 
-            foreach ($manoeuvres as $manoeuvre) {
-                $stmtManoeuvre->bindParam(':experience_id', $experienceId);
-                $stmtManoeuvre->bindParam(':manoeuvre_id', $manoeuvre);
 
+            foreach ($manoeuvres as $manoeuvre) {
+                $stmtManoeuvre->bindValue(':experience_id', $experienceId, PDO::PARAM_INT);
+                $stmtManoeuvre->bindValue(':manoeuvre_id', $manoeuvre, PDO::PARAM_INT);
                 $stmtManoeuvre->execute();
             }
         }
 
         $pdo->commit();
-        header("Location: ".$_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['PHP_SELF']);
         echo "Données insérées avec succès !";
     } catch (PDOException $e) {
         if ($pdo->inTransaction()) {

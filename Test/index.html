@@ -1,24 +1,747 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Test Simple</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Objectif Conduite - Desktop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 30px;
+            height: calc(100vh - 80px);
+        }
+
+        /* HEADER */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 18px;
+        }
+
+        /* LAYOUT PRINCIPAL */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            height: 100%;
+        }
+
+        /* COLONNE GAUCHE - STATISTIQUES ET PROGRESSION */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SECTION PROGRESSION */
+        .progress-section {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-percentage {
+            font-size: 32px;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .progress-bar-container {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .achievement-badge {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.3);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* SESSIONS RECENTES DANS PROGRESSION */
+        .recent-sessions-mini {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #f1f3f4;
+        }
+
+        .sessions-mini-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .sessions-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .session-mini-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .session-mini-date {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 4px;
+        }
+
+        .session-mini-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        /* COLONNE DROITE - CONTROLES ET SESSIONS */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .objective-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .unit-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .unit-btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .unit-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            font-weight: 500;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus + .input-label,
+        .input-group input:not(:placeholder-shown) + .input-label {
+            top: -10px;
+            left: 16px;
+            font-size: 12px;
+            color: #667eea;
+            background: white;
+            padding: 0 8px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* SESSIONS DETAILLEES */
+        .detailed-sessions {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .detailed-sessions-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .session-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .session-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .session-date {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .session-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
-    <form id="form" action="traiter.php">
-        <input name="nom" placeholder="Nom">
-        <button type="submit">Envoyer</button>
-    </form>
+    <div class="main-container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🚗 Tableau de Bord Conduite</h1>
+            <p>Suivez et atteignez vos objectifs de conduite en temps réel</p>
+        </div>
+
+        <!-- CONTENU PRINCIPAL -->
+        <div class="content-grid">
+            <!-- COLONNE GAUCHE -->
+            <div class="left-column">
+                <!-- STATISTIQUES -->
+                <div class="stats-section">
+                    <div class="stats-title">📊 Aperçu</div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="currentValue">0</div>
+                            <div class="stat-label">Réalisé</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="objectiveValue">--</div>
+                            <div class="stat-label">Objectif</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="remainingValue">--</div>
+                            <div class="stat-label">Restant</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="averageValue">2.5h</div>
+                            <div class="stat-label">Moyenne/jour</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRESSION -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <div class="progress-title">🎯 Progression</div>
+                        <div class="progress-percentage" id="progressPercent">0%</div>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+
+                    <div id="achievementBadge" style="display: none;">
+                        <div class="achievement-badge">🎉 Félicitations ! Objectif atteint !</div>
+                    </div>
+
+               
+                    
+                </div>
+            </div>
+
+            <!-- COLONNE DROITE -->
+            <div class="right-column">
+                <!-- FORMULAIRE OBJECTIF -->
+                <div class="objective-form">
+                    <div class="form-title">🎯 Définir mon objectif</div>
+                    
+                    <div class="unit-selector">
+                        <button class="unit-btn active" onclick="selectUnit('heures')">⏰ Heures</button>
+                        <button class="unit-btn" onclick="selectUnit('km')">🛣️ Kilomètres</button>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="objectiveInput" placeholder=" " min="1" max="1000">
+                        <label class="input-label" id="inputLabel">Nombre d'heures</label>
+                    </div>
+
+                    <button class="submit-btn" onclick="setObjective()">
+                        🚀 Valider mon objectif
+                    </button>
+                </div>
+
+                <!-- SESSIONS DETAILLEES -->
+                <div class="detailed-sessions">
+                    <div class="detailed-sessions-title">📈 Historique détaillé</div>
+                    <div id="detailedSessionsList">
+                        <div class="session-item">
+                            <span class="session-date">Aujourd'hui</span>
+                            <span class="session-value">2h30</span>
+                        </div>
+                        <div class="session-item">
+                            <span class="session-date">Hier</span>
+                            <span class="session-value">1h45</span>
+                        </div>
+                        <div class="session-item">
+                            <span class="session-date">Il y a 2 jours</span>
+                            <span class="session-value">3h00</span>
+                        </div>
+                        <div class="session-item">
+                            <span class="session-date">Il y a 3 jours</span>
+                            <span class="session-value">2h15</span>
+                        </div>
+                        <div class="session-item">
+                            <span class="session-date">Il y a 4 jours</span>
+                            <span class="session-value">1h30</span>
+                        </div>
+                        <div class="session-item">
+                            <span class="session-date">Il y a 5 jours</span>
+                            <span class="session-value">2h45</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('form').addEventListener('submit', function(e) {
-            e.preventDefault();
+        let currentUnit = 'heures';
+        let objectives = {
+            heures: 0,
+            km: 0
+        };
+        let currentProgress = 0;
+
+        // Données simulées de progression (comme si ça venait de ta BDD)
+        const simulatedData = {
+            heures: {
+                current: 15.5,
+                sessions: [
+                    { date: 'Aujourd\'hui', value: '2h30' },
+                    { date: 'Hier', value: '1h45' },
+                    { date: 'Il y a 2 jours', value: '3h00' },
+                    { date: 'Il y a 3 jours', value: '2h15' },
+                    { date: 'Il y a 4 jours', value: '1h30' },
+                    { date: 'Il y a 5 jours', value: '2h45' }
+                ]
+            },
+            km: {
+                current: 850,
+                sessions: [
+                    { date: 'Aujourd\'hui', value: '125 km' },
+                    { date: 'Hier', value: '89 km' },
+                    { date: 'Il y a 2 jours', value: '156 km' },
+                    { date: 'Il y a 3 jours', value: '98 km' },
+                    { date: 'Il y a 4 jours', value: '67 km' },
+                    { date: 'Il y a 5 jours', value: '134 km' }
+                ]
+            }
+        };
+
+        function selectUnit(unit) {
+            currentUnit = unit;
             
-            // Afficher les données en JS
-            const nom = document.querySelector('input[name="nom"]').value;
-            console.log('Données JS:', nom);
+            // Met à jour les boutons
+            document.querySelectorAll('.unit-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
             
-        
-        });
+            // Met à jour le label
+            const label = document.getElementById('inputLabel');
+            label.textContent = unit === 'heures' ? 'Nombre d\'heures' : 'Nombre de kilomètres';
+            
+            // Vide le champ input
+            document.getElementById('objectiveInput').value = '';
+            
+            // Met à jour les données affichées
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const data = simulatedData[currentUnit];
+            currentProgress = data.current;
+            
+            // Met à jour les stats
+            document.getElementById('currentValue').textContent = 
+                currentUnit === 'heures' ? currentProgress + 'h' : currentProgress + ' km';
+            
+            // Met à jour l'objectif pour l'unité courante
+            const currentObjective = objectives[currentUnit];
+            document.getElementById('objectiveValue').textContent = 
+                currentObjective > 0 ? 
+                (currentUnit === 'heures' ? currentObjective + 'h' : currentObjective + ' km') : 
+                '--';
+            
+            // Met à jour le restant
+            document.getElementById('remainingValue').textContent = 
+                currentObjective > 0 ? 
+                (currentUnit === 'heures' ? Math.max(0, currentObjective - currentProgress).toFixed(1) + 'h' : Math.max(0, currentObjective - currentProgress) + ' km') : 
+                '--';
+            
+            // Met à jour les sessions récentes mini
+            const sessionsMinGrid = document.getElementById('sessionsMinGrid');
+            sessionsMinGrid.innerHTML = data.sessions.slice(0, 4).map(session => 
+                `<div class="session-mini-item">
+                    <div class="session-mini-date">${session.date.replace('Il y a ', '').replace(' jours', 'j').replace(' jour', 'j')}</div>
+                    <div class="session-mini-value">${session.value}</div>
+                </div>`
+            ).join('');
+            
+            // Met à jour les sessions détaillées
+            const detailedSessionsList = document.getElementById('detailedSessionsList');
+            detailedSessionsList.innerHTML = data.sessions.map(session => 
+                `<div class="session-item">
+                    <span class="session-date">${session.date}</span>
+                    <span class="session-value">${session.value}</span>
+                </div>`
+            ).join('');
+            
+            // Recalcule la progression si on a un objectif pour cette unité
+            if (currentObjective > 0) {
+                updateProgress();
+            } else {
+                // Remet à zéro si pas d'objectif
+                document.getElementById('progressFill').style.width = '0%';
+                document.getElementById('progressPercent').textContent = '0%';
+                document.getElementById('achievementBadge').style.display = 'none';
+            }
+        }
+
+        function setObjective() {
+            const input = document.getElementById('objectiveInput');
+            const value = parseFloat(input.value);
+            
+            if (!value || value <= 0) {
+                alert('Veuillez entrer un objectif valide !');
+                return;
+            }
+            
+            // Sauvegarde l'objectif pour l'unité courante seulement
+            objectives[currentUnit] = value;
+            
+            // Met à jour l'affichage
+            updateDisplay();
+            
+            // Feedback visuel
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Objectif défini !';
+            btn.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+            }, 2000);
+            
+            // Vide le champ input
+            input.value = '';
+        }
+
+        function updateProgress() {
+            const currentObjective = objectives[currentUnit];
+            const percentage = Math.min((currentProgress / currentObjective) * 100, 100);
+            
+            // Anime la barre de progression
+            setTimeout(() => {
+                document.getElementById('progressFill').style.width = percentage + '%';
+                document.getElementById('progressPercent').textContent = Math.round(percentage) + '%';
+            }, 200);
+
+            // Affiche le badge si objectif atteint
+            if (percentage >= 100) {
+                setTimeout(() => {
+                    document.getElementById('achievementBadge').style.display = 'block';
+                }, 1000);
+            } else {
+                document.getElementById('achievementBadge').style.display = 'none';
+            }
+        }
+
+        // Initialise l'affichage au chargement
+        updateDisplay();
+
+        // Simule des mises à jour en temps réel (comme si ta BDD se mettait à jour)
+        setInterval(() => {
+            // Ajoute un petit incrément aléatoire pour simuler une nouvelle session
+            if (Math.random() < 0.05) { // 5% de chance toutes les 3 secondes
+                const increment = currentUnit === 'heures' ? 0.25 : 15;
+                currentProgress += increment;
+                
+                // Met à jour uniquement si on a un objectif défini pour cette unité
+                if (objectives[currentUnit] > 0) {
+                    updateDisplay();
+                }
+            }
+        }, 3000);
     </script>
 </body>
 </html>
