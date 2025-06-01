@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let savegoal = localStorage.getItem("userObjective");
   console.log(savegoal);
   if (savegoal === null) {
-    savegoal = "No objective set";
+    savegoal = '--';
   }
 
   document.querySelector("#goalNumber").textContent = savegoal;
