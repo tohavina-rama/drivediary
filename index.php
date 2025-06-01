@@ -1,5 +1,5 @@
 <?php
-$pageTitle = "Objectif";
+$pageTitle = "Drivediary";
 include __DIR__ . '/includes/head.php';
 ?>
 
